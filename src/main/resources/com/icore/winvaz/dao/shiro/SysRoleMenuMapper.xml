@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icore.winvaz.dao.shiro.SysRoleMenuMapper">
+  <resultMap id="BaseResultMap" type="com.icore.winvaz.entity.model.shiro.SysRoleMenu">
+    <!--@mbg.generated-->
+    <!--@Table sys_role_menu-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="menu_id" jdbcType="BIGINT" property="menuId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, role_id, menu_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_menu
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from sys_role_menu
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.icore.winvaz.entity.model.shiro.SysRoleMenu" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sys_role_menu (role_id, menu_id)
+    values (#{roleId,jdbcType=BIGINT}, #{menuId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.icore.winvaz.entity.model.shiro.SysRoleMenu" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sys_role_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="menuId != null">
+        menu_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="menuId != null">
+        #{menuId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icore.winvaz.entity.model.shiro.SysRoleMenu">
+    <!--@mbg.generated-->
+    update sys_role_menu
+    <set>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="menuId != null">
+        menu_id = #{menuId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icore.winvaz.entity.model.shiro.SysRoleMenu">
+    <!--@mbg.generated-->
+    update sys_role_menu
+    set role_id = #{roleId,jdbcType=BIGINT},
+      menu_id = #{menuId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

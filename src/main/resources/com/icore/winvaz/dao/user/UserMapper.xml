@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.icore.winvaz.dao.user.UserMapper">
+
+  <sql id="table">user</sql>
+
+  <sql id="fields">
+  	id, username, password, nickname, signature, sex, avatar, birthday,
+  	register_way, register_time, mobile, mobile_login, mobile_login_time, email,
+  	email_login, email_login_time, province_code, city_code, district_code, address,
+  	channel, state, state_change_time, invitation_code, name, identity_no,
+  	cert_verifed, driver_verifed, acc_id, acc_no, driver_role, deposit_flag,
+  	enterprise_user, update_time, user_role, enterprise_id, can_use, fleet_id
+  </sql>
+
+  <resultMap type="com.icore.winvaz.entity.model.user.User" id="baseResultMap">
+	<id property="id" column="id" />
+	<result property="username" column="username" />
+	<result property="password" column="password" />
+	<result property="nickname" column="nickname" />
+	<result property="signature" column="signature" />
+	<result property="sex" column="sex" />
+	<result property="avatar" column="avatar" />
+	<result property="birthday" column="birthday" />
+	<result property="registerWay" column="register_way" />
+	<result property="registerTime" column="register_time" />
+	<result property="mobile" column="mobile" />
+	<result property="mobileLogin" column="mobile_login" />
+	<result property="mobileLoginTime" column="mobile_login_time" />
+	<result property="email" column="email" />
+	<result property="emailLogin" column="email_login" />
+	<result property="emailLoginTime" column="email_login_time" />
+	<result property="provinceCode" column="province_code" />
+	<result property="cityCode" column="city_code" />
+	<result property="districtCode" column="district_code" />
+	<result property="address" column="address" />
+	<result property="channel" column="channel" />
+	<result property="state" column="state" />
+	<result property="stateChangeTime" column="state_change_time" />
+	<result property="invitationCode" column="invitation_code"/>
+	<result property="name" column="name" />
+	<result property="identityNo" column="identity_no" />
+	<result property="certVerifed" column="cert_verifed" />
+	<result property="driverVerifed" column="driver_verifed" />
+	<result property="accId" column="acc_id" />
+	<result property="accNo" column="acc_no" />
+	<result property="driverRole" column="driver_role" />
+	<result property="depositFlag" column="deposit_flag" />
+	<result property="enterpriseUser" column="enterprise_user" />
+	<result property="updateTime" column="update_time"/>
+	<result property="userRole" column="user_role"/>
+	<result property="enterpriseId" column="enterprise_id"/>
+	<result property="canUse" column="can_use"/>
+	<result property="fleetId" column="fleet_id"/>
+  </resultMap>
+
+  <sql id="criteria">
+    <where>
+      <foreach collection="criterions" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" suffix=")" prefixOverrides="and">
+            <foreach collection="criteria.criteria" item="criterion">
+			  <choose>
+			    <when test="criterion.noValue">
+			      and ${criterion.condition}
+			    </when>
+			    <when test="criterion.listValue">
+			      and ${criterion.condition}
+			      <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+			        #{listItem}
+			      </foreach>
+			    </when>
+			    <when test="criterion.betweenValue">
+			      and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+			    </when>
+			    <otherwise>
+			      and ${criterion.condition} #{criterion.value}
+			    </otherwise>
+			  </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+
+  <insert id="saveOne" keyProperty="id">
+    insert into<include refid="table" />
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <foreach collection="values" item="value">
+        ${value.mapping.column},
+      </foreach>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <foreach collection="values" item="value">
+        #{value.value},
+      </foreach>
+    </trim>
+  </insert>
+
+  <insert id="save" keyProperty="id">
+    insert into<include refid="table" />
+    <trim prefix="(" suffix=") values" suffixOverrides=",">
+      <foreach collection="list[0].values" item="value">
+        ${value.mapping.column},
+      </foreach>
+    </trim>
+    <foreach collection="list" item="model" separator=",">
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+	    <foreach collection="model.values" item="value">
+	      #{value.value},
+	    </foreach>
+	  </trim>
+    </foreach>
+  </insert>
+
+  <select id="findOne" resultMap="baseResultMap">
+    select<include refid="fields" />
+    from<include refid="table" />where id = #{id}
+  </select>
+
+  <select id="find" resultMap="baseResultMap">
+    select<include refid="fields" />
+    from<include refid="table" />
+    <if test="_parameter != null">
+      <include refid="criteria" />
+    </if>
+    <if test="orderBy != null and orderBy != ''">
+      order by ${orderBy} ${sort}
+    </if>
+    <if test="slice">
+      limit #{skip}, #{size}
+    </if>
+  </select>
+
+  <select id="count" resultType="long">
+    select count(id)
+    from<include refid="table" />
+    <if test="_parameter != null">
+      <include refid="criteria" />
+    </if>
+  </select>
+
+  <update id="update">
+    update<include refid="table" />
+	<set>
+	  <foreach collection="values" item="value">
+	    <if test="value.value != null">
+	      ${value.mapping.column} = #{value.value},
+	    </if>
+	  </foreach>
+	</set>where id = #{id}
+  </update>
+
+  <update id="updateNullable">
+    update<include refid="table" />
+	<set>
+	  <foreach collection="values" item="value">
+	    ${value.mapping.column} = #{value.value},
+	  </foreach>
+	</set>where id = #{id}
+  </update>
+
+</mapper>

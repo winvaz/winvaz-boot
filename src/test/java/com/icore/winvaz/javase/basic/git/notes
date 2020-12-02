@@ -1,0 +1,104 @@
+Git笔记
+
+1.Git安装完之后设置配置信息
+$ git config --global user.name "Your Name"
+$ git config --global user.email "email@example.com"
+注意git config命令的--global参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。
+
+2.Git init --初始化一个Git仓库。
+
+3.Git add --把文件添加到仓库。
+
+4.Git commit -m <message> --把文件提交到仓库。
+-m:后面输入的是本次提交的说明
+
+5.Git status --查看仓库当前的状态。
+
+6.Git diff --查看被修改文件修改内容。
+
+7.Git log --显示从最近到最远的提交日志。
+注意:如果嫌输出信息太多，看得眼花缭乱，加上--pretty=oneline参数。
+
+8.Git reset --hard HEAD^ --回退版本。
+注意:首先，Git必须知道当前版本是哪个版本，在Git中，用HEAD表示当前版本.
+     上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。
+     cat readme.txt --查看文件内容。
+     回到未来的某个版本,找到某个版本的commit id(可以不必写全)。例如:git reset --hard 942a
+
+9.Git reflog --记录每一次命令
+
+10.Git checkout --(--很重要，没有--，就变成了“切换到另一个分支”的命令) file --把file文件在工作区的修改全部撤销。
+注意:一种是file自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+一种是file已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+总之，就是让这个文件回到最近一次git commit或git add时的状态。
+
+11.撤销修改。
+注意:1.直接丢弃工作区的修改，Git checkout -- file。
+     2.如果添加到暂存区了。第一步:Git reset HEAD file; 第二步:重复第一条。
+     3.如果提交到版本库时，没有推送远程库，参考Git reset --hard commit_id
+
+12.Git rm file --删除一个文件。
+
+13.远程仓库。
+本地Git仓库与远程GitHub仓库的传输通过SSH加密，需要SSH Key
+$ ssh-keygen -t rsa -C "youremail@example.com"
+关联一个远程仓库
+$ git remote add origin git@server-name:path/repo-name.git
+关联后第一次推送
+$ git push -u origin master
+此后，每次本地提交，推送
+$ git push origin master
+
+14.克隆仓库
+克隆一个仓库，必须知道其仓库地址
+$ git clone https://xxxx
+
+15.创建分支与合并
+$ git checkout -b dev --创建+切换
+$ git branch <name> --创建分支
+注意:-b:表示创建并切换，相当于:git branch dev与git checkout dev
+$ git branch --查看分支,当前分支会有*标记
+$ git merge <--no-ff> -m dev --合并指定分支到当前分支
+注意:--no-ff参数可以用普通模式合并，合并后有分支历史。
+    而fast forward合并就看不出来曾经做过合并。
+$ git branch -d dev --删除dev分支
+注意:创建并切换到新的分支，可以使用:$ git switch -c dev --创建+切换
+    当Git无法自动合并分支时，必须首先先解决冲突，再提交，合并完成。
+    用git log --graph --pretty=oneline --abbrev-commit查看分支合并图。
+
+16.BUG分支
+$ git stash
+注意:dev分支修改不提交，把工作现场隐藏起来，等以后恢复现场后继续工作。
+    再master分支上修复，创建临时分支。添加提交，修复完成后切回master分支合并。然后删除临时分支。
+$ git stash list --查看隐藏的工作现场
+    接着回到dev分支。把刚没提交隐藏的内容恢复。
+$ git stash apply --恢复工作现场，stash内容不删除，使用git stash drop删除。
+$ git stash pop --恢复的同时stash内容也删除。
+在master分支修复了bug只有，dev分支也存在。切回dev分支
+$ git cherry-pick commit-id(临时分支与master分支合并时的id)
+
+17.Featrue分支
+注意:每添加一个新功能，最好新建一个feature分支，开发完成后，合并，删除。
+$ git branch -D <name> --丢弃一个没有被合并过的分支。
+
+18.多人协作
+$ git remote -v --查看远程库信息。
+$ git push origin <branch-name> --推送自己的修改.
+如果推送失败，说明远程分支比你本地更新。
+$ git pull --合并更新。有冲突解决。再重复第一步。
+注意:如果git pull提示no tracking information，则说明本地分支和远程分支的链接关系没有创建。
+$ git branch --set-upstream-to <branch-name> origin/<branch-name>。
+$ git checkout -b branch-name origin/branch-name --本地创建和远程对应的分支。
+
+19.创建标签
+$ git tag v1.0 <commit_id> --给当前分支最新提交的commit上打标签。
+$ git tag --查看标签
+$ git show <tagname> --查看标签信息。
+$ git tag -a v1.0 -m "message" commitid --创建带有说明的标签，-a指定标签名，-m指定说明文字。
+$ git tag -d v1.0 --删除标签。(标签只存储在本地)
+$ git push origin <tagname> --推送某个标签到远程。
+$ git push origin --tags --一次性推送标签到远程。
+$ git push origin :refs/tags/v0.9 --删除远程标签，前提删除本地标签。
+
+20.配置别名
+$ git config --global alias.st status --给status起别名为st

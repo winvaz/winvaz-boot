@@ -1,0 +1,1489 @@
+Last login: Thu Feb 27 14:29:26 on ttys001
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+wendingquandeMacBookPro:~ wdq$ cd /Users/wdq/Documents/
+wendingquandeMacBookPro:Documents wdq$ ls
+$RECYCLE.BIN		PyCharmWorkspace	my-java-demo-master
+IntelliJWorkspace	company			secoclient
+IntelliJetBrains	desktop.ini		shengyan
+JT			learngit		笔记.rtf
+wendingquandeMacBookPro:Documents wdq$ cd learngit/
+wendingquandeMacBookPro:learngit wdq$ pwd
+/Users/wdq/Documents/learngit
+wendingquandeMacBookPro:learngit wdq$ ls -ah
+.		..		.git		readme.txt
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "write a readme file"
+[master (root-commit) 87edd65] write a readme file
+ 1 file changed, 2 insertions(+)
+ create mode 100644 readme.txt
+wendingquandeMacBookPro:learngit wdq$ ls
+readme.txt
+wendingquandeMacBookPro:learngit wdq$ touch notes
+wendingquandeMacBookPro:learngit wdq$ ls
+notes		readme.txt
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+wendingquandeMacBookPro:learngit wdq$ git diff readme.txt 
+diff --git a/readme.txt b/readme.txt
+index 46d49bf..9247db6 100644
+--- a/readme.txt
++++ b/readme.txt
+@@ -1,2 +1,2 @@
+-Git is a version control system.
++Git is a distributed version control system.
+ Git is free software.
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "add distributed"
+[master 2472e51] add distributed
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "append GPL"
+[master 942aa0f] append GPL
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+wendingquandeMacBookPro:learngit wdq$ git log
+commit 942aa0f9b75a0efef075939bf082f77f0b9079fd (HEAD -> master)
+Author: winvaz <winvaz@163.com>
+Date:   Thu Feb 27 16:09:11 2020 +0800
+
+    append GPL
+
+commit 2472e517d0cbcda38f47a7284c1977cc22817cde
+Author: winvaz <winvaz@163.com>
+Date:   Thu Feb 27 15:54:41 2020 +0800
+
+    add distributed
+
+commit 87edd650718447187ce484d099c82a506d7223c7
+Author: winvaz <winvaz@163.com>
+Date:   Thu Feb 27 14:51:22 2020 +0800
+
+    write a readme file
+wendingquandeMacBookPro:learngit wdq$ git log --pretty=online
+fatal: invalid --pretty format: online
+wendingquandeMacBookPro:learngit wdq$ git log --pretty=oneline
+942aa0f9b75a0efef075939bf082f77f0b9079fd (HEAD -> master) append GPL
+2472e517d0cbcda38f47a7284c1977cc22817cde add distributed
+87edd650718447187ce484d099c82a506d7223c7 write a readme file
+wendingquandeMacBookPro:learngit wdq$ git reset --hard HEAD^
+HEAD is now at 2472e51 add distributed
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git is free software.
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ git log
+commit 2472e517d0cbcda38f47a7284c1977cc22817cde (HEAD -> master)
+Author: winvaz <winvaz@163.com>
+Date:   Thu Feb 27 15:54:41 2020 +0800
+
+    add distributed
+
+commit 87edd650718447187ce484d099c82a506d7223c7
+Author: winvaz <winvaz@163.com>
+Date:   Thu Feb 27 14:51:22 2020 +0800
+
+    write a readme file
+wendingquandeMacBookPro:learngit wdq$ git reset --hard 942aa
+HEAD is now at 942aa0f append GPL
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+wendingquandeMacBookPro:learngit wdq$ git log
+commit 942aa0f9b75a0efef075939bf082f77f0b9079fd (HEAD -> master)
+Author: winvaz <winvaz@163.com>
+Date:   Thu Feb 27 16:09:11 2020 +0800
+
+    append GPL
+
+commit 2472e517d0cbcda38f47a7284c1977cc22817cde
+Author: winvaz <winvaz@163.com>
+Date:   Thu Feb 27 15:54:41 2020 +0800
+
+    add distributed
+
+commit 87edd650718447187ce484d099c82a506d7223c7
+Author: winvaz <winvaz@163.com>
+Date:   Thu Feb 27 14:51:22 2020 +0800
+
+    write a readme file
+wendingquandeMacBookPro:learngit wdq$ git reflog
+942aa0f (HEAD -> master) HEAD@{0}: reset: moving to 942aa
+2472e51 HEAD@{1}: reset: moving to HEAD^
+942aa0f (HEAD -> master) HEAD@{2}: commit: append GPL
+2472e51 HEAD@{3}: commit: add distributed
+87edd65 HEAD@{4}: commit (initial): write a readme file
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   readme.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+wendingquandeMacBookPro:learngit wdq$ git commit -m "understand how stage works"
+[master f7352e5] understand how stage works
+ 1 file changed, 1 insertion(+)
+wendingquandeMacBookPro:learngit wdq$ git log --pretty=oneline
+f7352e513d1408412db8011d3cbe85915320f5ba (HEAD -> master) understand how stage works
+942aa0f9b75a0efef075939bf082f77f0b9079fd append GPL
+2472e517d0cbcda38f47a7284c1977cc22817cde add distributed
+87edd650718447187ce484d099c82a506d7223c7 write a readme file
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   readme.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes.
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "git tracks changes"
+[master bc97ecc] git tracks changes
+ 1 file changed, 1 insertion(+)
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+wendingquandeMacBookPro:learngit wdq$ git diff HEAD -- readme.txt 
+diff --git a/readme.txt b/readme.txt
+index 76d770f..a9c5755 100644
+--- a/readme.txt
++++ b/readme.txt
+@@ -1,4 +1,4 @@
+ Git is a distributed version control system.
+ Git is free software distributed under the GPL.
+ Git has a mutable index called stage.
+-Git tracks changes.
++Git tracks changes of files.
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commmit -m "tracks changes of files"
+git: 'commmit' is not a git command. See 'git --help'.
+
+The most similar command is
+	commit
+wendingquandeMacBookPro:learngit wdq$ git commit -m "tracks changes of files"
+[master add802b] tracks changes of files
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ git diff -- readme.txt 
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+wendingquandeMacBookPro:learngit wdq$ git checkout -- readme.txt 
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   readme.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+wendingquandeMacBookPro:learngit wdq$ git reset HREAD readme.txt 
+fatal: ambiguous argument 'HREAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+wendingquandeMacBookPro:learngit wdq$ git reset HEAD readme.txt 
+Unstaged changes after reset:
+M	readme.txt
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+wendingquandeMacBookPro:learngit wdq$ git checkout -- readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ touch test.txt
+wendingquandeMacBookPro:learngit wdq$ git add test.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "add test.txt"
+[master 12aa49a] add test.txt
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test.txt
+wendingquandeMacBookPro:learngit wdq$ rm test.txt 
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	deleted:    test.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+wendingquandeMacBookPro:learngit wdq$ git rm test.txt
+rm 'test.txt'
+wendingquandeMacBookPro:learngit wdq$ git commit -m "remove test.txt"
+[master f519688] remove test.txt
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 test.txt
+wendingquandeMacBookPro:learngit wdq$ git remote add origin https://github.com/winvaz/learngit.git
+wendingquandeMacBookPro:learngit wdq$ git push -u origin master
+Enumerating objects: 22, done.
+Counting objects: 100% (22/22), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (15/15), done.
+Writing objects: 100% (22/22), 1.79 KiB | 611.00 KiB/s, done.
+Total 22 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas: 100% (4/4), done.
+To https://github.com/winvaz/learngit.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git origin master
+git: 'origin' is not a git command. See 'git --help'.
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "push origin master"
+[master 5f9b5d9] push origin master
+ 1 file changed, 1 insertion(+)
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+Git push origin master.
+wendingquandeMacBookPro:learngit wdq$ git push origin master
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 293 bytes | 293.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/winvaz/learngit.git
+   f519688..5f9b5d9  master -> master
+wendingquandeMacBookPro:learngit wdq$ git checkout -b dev
+Switched to a new branch 'dev'
+wendingquandeMacBookPro:learngit wdq$ git branch
+* dev
+  master
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "branch test"
+[dev ffedca5] branch test
+ 1 file changed, 1 insertion(+)
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+Git push origin master.
+wendingquandeMacBookPro:learngit wdq$ git merge dev
+Updating 5f9b5d9..ffedca5
+Fast-forward
+ readme.txt | 1 +
+ 1 file changed, 1 insertion(+)
+wendingquandeMacBookPro:learngit wdq$ git branch
+  dev
+* master
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+Git push origin master.
+Creating a new branch is quick.
+wendingquandeMacBookPro:learngit wdq$ git branch -d dev
+Deleted branch dev (was ffedca5).
+wendingquandeMacBookPro:learngit wdq$ git branch
+* master
+wendingquandeMacBookPro:learngit wdq$ git switch -c feature1
+git: 'switch' is not a git command. See 'git --help'.
+wendingquandeMacBookPro:learngit wdq$ git switch -c feature1
+git: 'switch' is not a git command. See 'git --help'.
+wendingquandeMacBookPro:learngit wdq$ git checkout -b feature1
+M	readme.txt
+Switched to a new branch 'feature1'
+wendingquandeMacBookPro:learngit wdq$ git branch
+* feature1
+  master
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "AND simple"
+[feature1 466f9a1] AND simple
+ 1 file changed, 1 insertion(+)
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+wendingquandeMacBookPro:learngit wdq$ git branch
+  feature1
+* master
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "& simple"
+[master b54bc9c] & simple
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+wendingquandeMacBookPro:learngit wdq$ git branch
+  feature1
+* master
+wendingquandeMacBookPro:learngit wdq$ git merge feature1
+Auto-merging readme.txt
+CONFLICT (content): Merge conflict in readme.txt
+Automatic merge failed; fix conflicts and then commit the result.
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+
+	both modified:   readme.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+Git push origin master.
+<<<<<<< HEAD
+Creating a new branch is quick & simple.
+=======
+Creating a new branch is quick.
+Creating a new branch is quick AND simple.
+>>>>>>> feature1
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git branch
+  feature1
+* master
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "conflict fixed"
+[master 8cf6b13] conflict fixed
+wendingquandeMacBookPro:learngit wdq$ git log
+commit 8cf6b13801e1d471331b5b3dbde375a4ea25575d (HEAD -> master)
+Merge: b54bc9c 466f9a1
+Author: winvaz <winvaz@163.com>
+Date:   Fri Feb 28 14:13:45 2020 +0800
+
+    conflict fixed
+
+commit b54bc9c1ce3ba73dd04f4751b0e74efd3b66ea76
+Author: winvaz <winvaz@163.com>
+Date:   Fri Feb 28 14:07:39 2020 +0800
+
+    & simple
+
+commit 466f9a1534b2d7ec6deaf153373c99dfa2c89d34 (feature1)
+Author: winvaz <winvaz@163.com>
+Date:   Fri Feb 28 14:05:20 2020 +0800
+
+    AND simple
+
+commit ffedca57802359fb40170ad1c9a43e7476d042b7
+Author: winvaz <winvaz@163.com>
+Date:   Fri Feb 28 11:54:37 2020 +0800
+
+wendingquandeMacBookPro:learngit wdq$ git log --graph --pretty=oneline --abbrev-commit
+*   8cf6b13 (HEAD -> master) conflict fixed
+|\  
+| * 466f9a1 (feature1) AND simple
+* | b54bc9c & simple
+|/  
+* ffedca5 branch test
+* 5f9b5d9 (origin/master) push origin master
+* f519688 remove test.txt
+* 12aa49a add test.txt
+* add802b tracks changes of files
+* bc97ecc git tracks changes
+* f7352e5 understand how stage works
+* 942aa0f append GPL
+* 2472e51 add distributed
+* 87edd65 write a readme file
+wendingquandeMacBookPro:learngit wdq$ git branch -d feature1
+Deleted branch feature1 (was 466f9a1).
+wendingquandeMacBookPro:learngit wdq$ git branch
+* master
+wendingquandeMacBookPro:learngit wdq$ git checkout -b dev
+Switched to a new branch 'dev'
+wendingquandeMacBookPro:learngit wdq$ git branch
+* dev
+  master
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "add merge"
+[dev a1dd22f] add merge
+ 1 file changed, 1 insertion(+)
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 4 commits.
+  (use "git push" to publish your local commits)
+wendingquandeMacBookPro:learngit wdq$ git merge --no-ff -m "merge with no-ff" dev
+Merge made by the 'recursive' strategy.
+ readme.txt | 1 +
+ 1 file changed, 1 insertion(+)
+wendingquandeMacBookPro:learngit wdq$ git log --graph --pretty=oneline --abbrev-commit
+*   5ebdcf4 (HEAD -> master) merge with no-ff
+|\  
+| * a1dd22f (dev) add merge
+|/  
+*   8cf6b13 conflict fixed
+|\  
+| * 466f9a1 AND simple
+* | b54bc9c & simple
+|/  
+* ffedca5 branch test
+* 5f9b5d9 (origin/master) push origin master
+* f519688 remove test.txt
+* 12aa49a add test.txt
+* add802b tracks changes of files
+* bc97ecc git tracks changes
+* f7352e5 understand how stage works
+* 942aa0f append GPL
+* 2472e51 add distributed
+* 87edd65 write a readme file
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 6 commits.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ git branch
+  dev
+* master
+wendingquandeMacBookPro:learngit wdq$ git checkout dev
+Switched to branch 'dev'
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch dev
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+	test.py
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ git add test.py 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "add test.py"
+[dev b175b57] add test.py
+ 1 file changed, 4 insertions(+)
+ create mode 100644 test.py
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch dev
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ vim test.py 
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch dev
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   test.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+wendingquandeMacBookPro:learngit wdq$ git add test.py 
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch dev
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   test.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+wendingquandeMacBookPro:learngit wdq$ git stash
+Saved working directory and index state WIP on dev: b175b57 add test.py
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch dev
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ git branch
+* dev
+  master
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 6 commits.
+  (use "git push" to publish your local commits)
+wendingquandeMacBookPro:learngit wdq$ git checkout -b issue-101
+Switched to a new branch 'issue-101'
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "fix bug 101"
+[issue-101 d541a2c] fix bug 101
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+wendingquandeMacBookPro:learngit wdq$ git branch
+  dev
+* issue-101
+  master
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 6 commits.
+  (use "git push" to publish your local commits)
+wendingquandeMacBookPro:learngit wdq$ git merge --no-ff -m "merged bug fix 101" issue-101
+Merge made by the 'recursive' strategy.
+ readme.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+wendingquandeMacBookPro:learngit wdq$ git checkout dev
+Switched to branch 'dev'
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch dev
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ git stash list
+stash@{0}: WIP on dev: b175b57 add test.py
+wendingquandeMacBookPro:learngit wdq$ git stash pop
+On branch dev
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   test.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (c43e11e71b381013b6074a14d32a5862d5cbcaa8)
+wendingquandeMacBookPro:learngit wdq$ git stash list
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+Git push origin master.
+Creating a new branch is quick and simple.
+Git prohibit Fast forward add merge.
+wendingquandeMacBookPro:learngit wdq$ git branch
+* dev
+  issue-101
+  master
+wendingquandeMacBookPro:learngit wdq$ git branch -d issue-101
+error: The branch 'issue-101' is not fully merged.
+If you are sure you want to delete it, run 'git branch -D issue-101'.
+wendingquandeMacBookPro:learngit wdq$ git branch
+* dev
+  issue-101
+  master
+wendingquandeMacBookPro:learngit wdq$ git branch -d issue-101
+error: The branch 'issue-101' is not fully merged.
+If you are sure you want to delete it, run 'git branch -D issue-101'.
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+error: Your local changes to the following files would be overwritten by checkout:
+	test.py
+Please commit your changes or stash them before you switch branches.
+Aborting
+wendingquandeMacBookPro:learngit wdq$ git branch -d issue-101
+error: The branch 'issue-101' is not fully merged.
+If you are sure you want to delete it, run 'git branch -D issue-101'.
+wendingquandeMacBookPro:learngit wdq$ git branch
+* dev
+  issue-101
+  master
+wendingquandeMacBookPro:learngit wdq$ git stash
+Saved working directory and index state WIP on dev: b175b57 add test.py
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch dev
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 8 commits.
+  (use "git push" to publish your local commits)
+wendingquandeMacBookPro:learngit wdq$ git branch
+  dev
+  issue-101
+* master
+wendingquandeMacBookPro:learngit wdq$ git branch -d issue-101
+Deleted branch issue-101 (was d541a2c).
+wendingquandeMacBookPro:learngit wdq$ git branch
+  dev
+* master
+wendingquandeMacBookPro:learngit wdq$ git checkout dev
+Switched to branch 'dev'
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch dev
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ git stash list
+stash@{0}: WIP on dev: b175b57 add test.py
+wendingquandeMacBookPro:learngit wdq$ git stash pop
+On branch dev
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   test.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (9b31ca218d0255ddeebf9ee2775b3b83811e2132)
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch dev
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   test.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+wendingquandeMacBookPro:learngit wdq$ git cherry-pick b175b57
+On branch dev
+You are currently cherry-picking commit b175b57.
+
+Changes not staged for commit:
+	modified:   test.py
+
+Untracked files:
+	notes
+
+no changes added to commit
+The previous cherry-pick is now empty, possibly due to conflict resolution.
+If you wish to commit it anyway, use:
+
+    git commit --allow-empty
+
+Otherwise, please use 'git reset'
+wendingquandeMacBookPro:learngit wdq$ git commit -m "modify test.py"
+On branch dev
+You are currently cherry-picking commit b175b57.
+
+Changes not staged for commit:
+	modified:   test.py
+
+Untracked files:
+	notes
+
+no changes added to commit
+The previous cherry-pick is now empty, possibly due to conflict resolution.
+If you wish to commit it anyway, use:
+
+    git commit --allow-empty
+
+Otherwise, please use 'git reset'
+wendingquandeMacBookPro:learngit wdq$ git add test.py 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "modify test.py"
+[dev e07c59c] modify test.py
+ Date: Fri Feb 28 15:20:41 2020 +0800
+ 1 file changed, 2 insertions(+)
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch dev
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+Git push origin master.
+Creating a new branch is quick and simple.
+Git prohibit Fast forward add merge.
+wendingquandeMacBookPro:learngit wdq$ git cherry-pick b175b57
+error: could not apply b175b57... add test.py
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: and commit the result with 'git commit'
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+test.py: needs merge
+error: you need to resolve your current index first
+wendingquandeMacBookPro:learngit wdq$ git branch
+* dev
+  master
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+test.py: needs merge
+error: you need to resolve your current index first
+wendingquandeMacBookPro:learngit wdq$ git log --pretty=oneline
+e07c59c8a156f30206fff5e9308a98445d4e34ba (HEAD -> dev) modify test.py
+b175b57cb975a6f28375a382d2061e767db035ea add test.py
+a1dd22f1c1dc54a74ede2d0901dd6343d4f61e34 add merge
+8cf6b13801e1d471331b5b3dbde375a4ea25575d conflict fixed
+b54bc9c1ce3ba73dd04f4751b0e74efd3b66ea76 & simple
+466f9a1534b2d7ec6deaf153373c99dfa2c89d34 AND simple
+ffedca57802359fb40170ad1c9a43e7476d042b7 branch test
+5f9b5d9db6bb7cdd728ef5acf51c1d892eee24fe (origin/master) push origin master
+f519688a569a91dd518b3c92beee73a3f5a9c2f7 remove test.txt
+12aa49a24323c1dfb82744f99b58753fbe16814c add test.txt
+add802b8dd3ef116522d65284220c80165b9f844 tracks changes of files
+bc97eccb8916fefd3bac710fb60cd3f2d0904e87 git tracks changes
+f7352e513d1408412db8011d3cbe85915320f5ba understand how stage works
+942aa0f9b75a0efef075939bf082f77f0b9079fd append GPL
+2472e517d0cbcda38f47a7284c1977cc22817cde add distributed
+87edd650718447187ce484d099c82a506d7223c7 write a readme file
+wendingquandeMacBookPro:learngit wdq$ git relog
+git: 'relog' is not a git command. See 'git --help'.
+
+The most similar command is
+	reflog
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+test.py: needs merge
+error: you need to resolve your current index first
+wendingquandeMacBookPro:learngit wdq$ git branch
+* dev
+  master
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch dev
+You are currently cherry-picking commit b175b57.
+  (fix conflicts and run "git cherry-pick --continue")
+  (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+
+	both added:      test.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+wendingquandeMacBookPro:learngit wdq$ git add test.py 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "modify test.py"
+[dev 7bca645] modify test.py
+ Date: Fri Feb 28 15:20:41 2020 +0800
+ 1 file changed, 3 insertions(+)
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch dev
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 8 commits.
+  (use "git push" to publish your local commits)
+wendingquandeMacBookPro:learngit wdq$ git log
+commit 69b4ab675676efcdba0db2aa7257db61432aca48 (HEAD -> master)
+Merge: 5ebdcf4 d541a2c
+Author: winvaz <winvaz@163.com>
+Date:   Fri Feb 28 15:29:39 2020 +0800
+
+    merged bug fix 101
+
+commit d541a2cf7a83c2db23351e587b4b40ee3d73152d
+Author: winvaz <winvaz@163.com>
+Date:   Fri Feb 28 15:28:26 2020 +0800
+
+    fix bug 101
+
+commit 5ebdcf46e38ab5b83e8e5b496495c560bb39b7be
+Merge: 8cf6b13 a1dd22f
+Author: winvaz <winvaz@163.com>
+Date:   Fri Feb 28 14:32:34 2020 +0800
+
+    merge with no-ff
+
+commit a1dd22f1c1dc54a74ede2d0901dd6343d4f61e34
+Author: winvaz <winvaz@163.com>
+Date:   Fri Feb 28 14:31:42 2020 +0800
+wendingquandeMacBookPro:learngit wdq$ git log --pretty=oneline
+69b4ab675676efcdba0db2aa7257db61432aca48 (HEAD -> master) merged bug fix 101
+d541a2cf7a83c2db23351e587b4b40ee3d73152d fix bug 101
+5ebdcf46e38ab5b83e8e5b496495c560bb39b7be merge with no-ff
+a1dd22f1c1dc54a74ede2d0901dd6343d4f61e34 add merge
+8cf6b13801e1d471331b5b3dbde375a4ea25575d conflict fixed
+b54bc9c1ce3ba73dd04f4751b0e74efd3b66ea76 & simple
+466f9a1534b2d7ec6deaf153373c99dfa2c89d34 AND simple
+ffedca57802359fb40170ad1c9a43e7476d042b7 branch test
+5f9b5d9db6bb7cdd728ef5acf51c1d892eee24fe (origin/master) push origin master
+f519688a569a91dd518b3c92beee73a3f5a9c2f7 remove test.txt
+12aa49a24323c1dfb82744f99b58753fbe16814c add test.txt
+add802b8dd3ef116522d65284220c80165b9f844 tracks changes of files
+bc97eccb8916fefd3bac710fb60cd3f2d0904e87 git tracks changes
+f7352e513d1408412db8011d3cbe85915320f5ba understand how stage works
+942aa0f9b75a0efef075939bf082f77f0b9079fd append GPL
+2472e517d0cbcda38f47a7284c1977cc22817cde add distributed
+87edd650718447187ce484d099c82a506d7223c7 write a readme file
+wendingquandeMacBookPro:learngit wdq$ git relog
+git: 'relog' is not a git command. See 'git --help'.
+
+The most similar command is
+	reflog
+wendingquandeMacBookPro:learngit wdq$ git relog
+git: 'relog' is not a git command. See 'git --help'.
+
+The most similar command is
+	reflog
+wendingquandeMacBookPro:learngit wdq$ git reflog
+69b4ab6 (HEAD -> master) HEAD@{0}: checkout: moving from dev to master
+7bca645 (dev) HEAD@{1}: commit (cherry-pick): modify test.py
+e07c59c HEAD@{2}: commit (cherry-pick): modify test.py
+b175b57 HEAD@{3}: checkout: moving from master to dev
+69b4ab6 (HEAD -> master) HEAD@{4}: checkout: moving from dev to master
+b175b57 HEAD@{5}: reset: moving to HEAD
+b175b57 HEAD@{6}: checkout: moving from master to dev
+69b4ab6 (HEAD -> master) HEAD@{7}: merge issue-101: Merge made by the 'recursive' strategy.
+5ebdcf4 HEAD@{8}: checkout: moving from issue-101 to master
+d541a2c HEAD@{9}: commit: fix bug 101
+5ebdcf4 HEAD@{10}: checkout: moving from master to issue-101
+5ebdcf4 HEAD@{11}: checkout: moving from dev to master
+b175b57 HEAD@{12}: reset: moving to HEAD
+b175b57 HEAD@{13}: commit: add test.py
+a1dd22f HEAD@{14}: checkout: moving from master to dev
+5ebdcf4 HEAD@{15}: merge dev: Merge made by the 'recursive' strategy.
+8cf6b13 HEAD@{16}: checkout: moving from dev to master
+a1dd22f HEAD@{17}: commit: add merge
+8cf6b13 HEAD@{18}: checkout: moving from master to dev
+8cf6b13 HEAD@{19}: commit (merge): conflict fixed
+b54bc9c HEAD@{20}: commit: & simple
+ffedca5 HEAD@{21}: checkout: moving from feature1 to master
+wendingquandeMacBookPro:learngit wdq$ git branch
+  dev
+* master
+wendingquandeMacBookPro:learngit wdq$ git checkout dev
+Switched to branch 'dev'
+wendingquandeMacBookPro:learngit wdq$ git cherry-pick d541a2c
+[dev 1775242] fix bug 101
+ Date: Fri Feb 28 15:28:26 2020 +0800
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git a free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+Git push origin master.
+Creating a new branch is quick and simple.
+Git prohibit Fast forward add merge.
+wendingquandeMacBookPro:learngit wdq$ git branch
+* dev
+  master
+wendingquandeMacBookPro:learngit wdq$ git checkout -c feature-vulcan
+error: unknown switch `c'
+usage: git checkout [<options>] <branch>
+   or: git checkout [<options>] [<branch>] -- <file>...
+
+    -q, --quiet           suppress progress reporting
+    -b <branch>           create and checkout a new branch
+    -B <branch>           create/reset and checkout a branch
+    -l                    create reflog for new branch
+    --detach              detach HEAD at named commit
+    -t, --track           set upstream info for new branch
+    --orphan <new-branch>
+                          new unparented branch
+    -2, --ours            checkout our version for unmerged files
+    -3, --theirs          checkout their version for unmerged files
+    -f, --force           force checkout (throw away local modifications)
+    -m, --merge           perform a 3-way merge with the new branch
+    --overwrite-ignore    update ignored files (default)
+    --conflict <style>    conflict style (merge or diff3)
+    -p, --patch           select hunks interactively
+    --ignore-skip-worktree-bits
+                          do not limit pathspecs to sparse entries only
+    --no-guess            do not second guess 'git checkout <no-such-branch>'
+    --ignore-other-worktrees
+                          do not check if another worktree is holding the given ref
+    --recurse-submodules[=<checkout>]
+                          control recursive updating of submodules
+    --progress            force progress reporting
+
+wendingquandeMacBookPro:learngit wdq$ git checkout -b feature-vulcan
+Switched to a new branch 'feature-vulcan'
+wendingquandeMacBookPro:learngit wdq$ touch vulcan.py
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch feature-vulcan
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+	vulcan.py
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ git add vulcan.py 
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch feature-vulcan
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	new file:   vulcan.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+wendingquandeMacBookPro:learngit wdq$ git commit -m "add feature vulcan"
+[feature-vulcan e0ce095] add feature vulcan
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 vulcan.py
+wendingquandeMacBookPro:learngit wdq$ git checkout dev
+Switched to branch 'dev'
+wendingquandeMacBookPro:learngit wdq$ git merge --no-ff -m "merge vulcan" feature-vulcan
+Merge made by the 'recursive' strategy.
+ vulcan.py | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 vulcan.py
+wendingquandeMacBookPro:learngit wdq$ git branch -d feature-vulcan
+Deleted branch feature-vulcan (was e0ce095).
+wendingquandeMacBookPro:learngit wdq$ git branch
+* dev
+  master
+wendingquandeMacBookPro:learngit wdq$ git remote
+origin
+wendingquandeMacBookPro:learngit wdq$ git remote -v
+origin	https://github.com/winvaz/learngit.git (fetch)
+origin	https://github.com/winvaz/learngit.git (push)
+wendingquandeMacBookPro:learngit wdq$ git branch
+* dev
+  master
+wendingquandeMacBookPro:learngit wdq$ git log
+commit 0686ab7cca2aeaf9cf0210e6aaa919b5a255fe45 (HEAD -> dev)
+Merge: 1775242 e0ce095
+Author: winvaz <winvaz@163.com>
+Date:   Fri Feb 28 16:24:30 2020 +0800
+
+    merge vulcan
+
+commit e0ce09564a95fffe3d5e19c63d8ca4aa72dcb44b
+Author: winvaz <winvaz@163.com>
+Date:   Fri Feb 28 16:23:00 2020 +0800
+
+    add feature vulcan
+
+commit 17752424317106e820b392467b9a33c3109056c9
+Author: winvaz <winvaz@163.com>
+Date:   Fri Feb 28 15:28:26 2020 +0800
+
+    fix bug 101
+
+commit 7bca64532c54f37b0a2ed28f79e1f37c60a27b57
+Author: winvaz <winvaz@163.com>
+Date:   Fri Feb 28 15:20:41 2020 +0800
+
+wendingquandeMacBookPro:learngit wdq$ git log --graph --pretty=oneline --abbrev-commit
+*   0686ab7 (HEAD -> dev) merge vulcan
+|\  
+| * e0ce095 add feature vulcan
+|/  
+* 1775242 fix bug 101
+* 7bca645 modify test.py
+* e07c59c modify test.py
+* b175b57 add test.py
+* a1dd22f add merge
+*   8cf6b13 conflict fixed
+|\  
+| * 466f9a1 AND simple
+* | b54bc9c & simple
+|/  
+* ffedca5 branch test
+* 5f9b5d9 (origin/master) push origin master
+* f519688 remove test.txt
+* 12aa49a add test.txt
+* add802b tracks changes of files
+* bc97ecc git tracks changes
+* f7352e5 understand how stage works
+* 942aa0f append GPL
+* 2472e51 add distributed
+wendingquandeMacBookPro:learngit wdq$ git rebase
+There is no tracking information for the current branch.
+Please specify which branch you want to rebase against.
+See git-rebase(1) for details.
+
+    git rebase '<branch>'
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=<remote>/<branch> dev
+
+wendingquandeMacBookPro:learngit wdq$ git log --graph --pretty=oneline --abbrev-commit
+*   0686ab7 (HEAD -> dev) merge vulcan
+|\  
+| * e0ce095 add feature vulcan
+|/  
+* 1775242 fix bug 101
+* 7bca645 modify test.py
+* e07c59c modify test.py
+* b175b57 add test.py
+* a1dd22f add merge
+*   8cf6b13 conflict fixed
+|\  
+| * 466f9a1 AND simple
+* | b54bc9c & simple
+|/  
+* ffedca5 branch test
+* 5f9b5d9 (origin/master) push origin master
+* f519688 remove test.txt
+* 12aa49a add test.txt
+* add802b tracks changes of files
+* bc97ecc git tracks changes
+* f7352e5 understand how stage works
+* 942aa0f append GPL
+* 2472e51 add distributed
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 8 commits.
+  (use "git push" to publish your local commits)
+wendingquandeMacBookPro:learngit wdq$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 8 commits.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ git log --graph --pretty=oneline --abbrev-commit
+*   69b4ab6 (HEAD -> master) merged bug fix 101
+|\  
+| * d541a2c fix bug 101
+|/  
+*   5ebdcf4 merge with no-ff
+|\  
+| * a1dd22f add merge
+|/  
+*   8cf6b13 conflict fixed
+|\  
+| * 466f9a1 AND simple
+* | b54bc9c & simple
+|/  
+* ffedca5 branch test
+* 5f9b5d9 (origin/master) push origin master
+* f519688 remove test.txt
+* 12aa49a add test.txt
+* add802b tracks changes of files
+* bc97ecc git tracks changes
+* f7352e5 understand how stage works
+* 942aa0f append GPL
+* 2472e51 add distributed
+* 87edd65 write a readme file
+wendingquandeMacBookPro:learngit wdq$ git rebase
+First, rewinding head to replay your work on top of it...
+Applying: branch test
+Applying: & simple
+Applying: AND simple
+Using index info to reconstruct a base tree...
+M	readme.txt
+Falling back to patching base and 3-way merge...
+Auto-merging readme.txt
+CONFLICT (content): Merge conflict in readme.txt
+error: Failed to merge in the changes.
+Patch failed at 0003 AND simple
+hint: Use 'git am --show-current-patch' to see the failed patch
+Resolve all conflicts manually, mark them as resolved with
+"git add/rm <conflicted_files>", then run "git rebase --continue".
+You can instead skip this commit: run "git rebase --skip".
+To abort and get back to the state before "git rebase", run "git rebase --abort".
+wendingquandeMacBookPro:learngit wdq$ git log --graph --pretty=oneline --abbrev-commit
+* d071c6a (HEAD) & simple
+* ba1beb7 branch test
+* 5f9b5d9 (origin/master) push origin master
+* f519688 remove test.txt
+* 12aa49a add test.txt
+* add802b tracks changes of files
+* bc97ecc git tracks changes
+* f7352e5 understand how stage works
+* 942aa0f append GPL
+* 2472e51 add distributed
+* 87edd65 write a readme file
+wendingquandeMacBookPro:learngit wdq$ git branch
+* (no branch, rebasing master)
+  dev
+  master
+wendingquandeMacBookPro:learngit wdq$ git branch
+* (no branch, rebasing master)
+  dev
+  master
+wendingquandeMacBookPro:learngit wdq$ git checkout dev
+readme.txt: needs merge
+error: you need to resolve your current index first
+wendingquandeMacBookPro:learngit wdq$ git status
+rebase in progress; onto 5f9b5d9
+You are currently rebasing branch 'master' on '5f9b5d9'.
+  (fix conflicts and then run "git rebase --continue")
+  (use "git rebase --skip" to skip this patch)
+  (use "git rebase --abort" to check out the original branch)
+
+Unmerged paths:
+  (use "git reset HEAD <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+
+	both modified:   readme.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+no changes added to commit (use "git add" and/or "git commit -a")
+wendingquandeMacBookPro:learngit wdq$ git rebase --continue
+readme.txt: needs merge
+You must edit all merge conflicts and then
+mark them as resolved using git add
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+Git push origin master.
+<<<<<<< HEAD
+Creating a new branch is quick & simple.
+=======
+Creating a new branch is quick.
+Creating a new branch is quick AND simple.
+>>>>>>> AND simple
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "merge readme.txt"
+[detached HEAD 5295a75] merge readme.txt
+ 1 file changed, 2 insertions(+)
+wendingquandeMacBookPro:learngit wdq$ git branch
+* (no branch, rebasing master)
+  dev
+  master
+wendingquandeMacBookPro:learngit wdq$ git status
+rebase in progress; onto 5f9b5d9
+You are currently rebasing branch 'master' on '5f9b5d9'.
+  (all conflicts fixed: run "git rebase --continue")
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+wendingquandeMacBookPro:learngit wdq$ git rebase --continue
+Applying: AND simple
+No changes - did you forget to use 'git add'?
+If there is nothing left to stage, chances are that something else
+already introduced the same changes; you might want to skip this patch.
+Resolve all conflicts manually, mark them as resolved with
+"git add/rm <conflicted_files>", then run "git rebase --continue".
+You can instead skip this commit: run "git rebase --skip".
+To abort and get back to the state before "git rebase", run "git rebase --abort".
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+Git push origin master.
+Creating a new branch is quick & simple.
+Creating a new branch is quick.
+Creating a new branch is quick AND simple.
+wendingquandeMacBookPro:learngit wdq$ vim readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git add readme.txt 
+wendingquandeMacBookPro:learngit wdq$ git commit -m "add simple"
+[detached HEAD 66bb343] add simple
+ 1 file changed, 1 insertion(+)
+wendingquandeMacBookPro:learngit wdq$ git rebase --continue
+Applying: AND simple
+No changes - did you forget to use 'git add'?
+If there is nothing left to stage, chances are that something else
+already introduced the same changes; you might want to skip this patch.
+Resolve all conflicts manually, mark them as resolved with
+"git add/rm <conflicted_files>", then run "git rebase --continue".
+You can instead skip this commit: run "git rebase --skip".
+To abort and get back to the state before "git rebase", run "git rebase --abort".
+wendingquandeMacBookPro:learngit wdq$ git branch
+* (no branch, rebasing master)
+  dev
+  master
+wendingquandeMacBookPro:learngit wdq$ git checkout dev
+Warning: you are leaving 4 commits behind, not connected to
+any of your branches:
+
+  66bb343 add simple
+  5295a75 merge readme.txt
+  d071c6a & simple
+  ba1beb7 branch test
+
+If you want to keep them by creating a new branch, this may be a good time
+to do so with:
+
+ git branch <new-branch-name> 66bb343
+
+Switched to branch 'dev'
+wendingquandeMacBookPro:learngit wdq$ git branch
+* dev
+  master
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git a free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+Git push origin master.
+Creating a new branch is quick and simple.
+Git prohibit Fast forward add merge.
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 8 commits.
+  (use "git push" to publish your local commits)
+wendingquandeMacBookPro:learngit wdq$ cat readme.txt 
+Git is a distributed version control system.
+Git a free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+Git push origin master.
+Creating a new branch is quick and simple.
+Git prohibit Fast forward add merge.
+wendingquandeMacBookPro:learngit wdq$ git checkout dev
+Switched to branch 'dev'
+wendingquandeMacBookPro:learngit wdq$ git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 8 commits.
+  (use "git push" to publish your local commits)
+wendingquandeMacBookPro:learngit wdq$ git push origin master
+Enumerating objects: 22, done.
+Counting objects: 100% (22/22), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (14/14), done.
+Writing objects: 100% (20/20), 1.58 KiB | 1.58 MiB/s, done.
+Total 20 (delta 8), reused 0 (delta 0)
+remote: Resolving deltas: 100% (8/8), completed with 1 local object.
+To https://github.com/winvaz/learngit.git
+   5f9b5d9..69b4ab6  master -> master
+wendingquandeMacBookPro:learngit wdq$ git branch
+  dev
+* master
+wendingquandeMacBookPro:learngit wdq$ git tag v1.0
+wendingquandeMacBookPro:learngit wdq$ git tag
+v1.0
+wendingquandeMacBookPro:learngit wdq$ git log --pretty=oneline --abbrev-commit
+69b4ab6 (HEAD -> master, tag: v1.0, origin/master) merged bug fix 101
+d541a2c fix bug 101
+5ebdcf4 merge with no-ff
+a1dd22f add merge
+8cf6b13 conflict fixed
+b54bc9c & simple
+466f9a1 AND simple
+ffedca5 branch test
+5f9b5d9 push origin master
+f519688 remove test.txt
+12aa49a add test.txt
+add802b tracks changes of files
+bc97ecc git tracks changes
+f7352e5 understand how stage works
+942aa0f append GPL
+2472e51 add distributed
+87edd65 write a readme file
+wendingquandeMacBookPro:learngit wdq$ git tag v0.9 a1dd22f
+wendingquandeMacBookPro:learngit wdq$ git tag
+v0.9
+v1.0
+wendingquandeMacBookPro:learngit wdq$ git show v0.9
+commit a1dd22f1c1dc54a74ede2d0901dd6343d4f61e34 (tag: v0.9)
+Author: winvaz <winvaz@163.com>
+Date:   Fri Feb 28 14:31:42 2020 +0800
+
+    add merge
+
+diff --git a/readme.txt b/readme.txt
+index 0e665b5..7604763 100644
+--- a/readme.txt
++++ b/readme.txt
+@@ -4,3 +4,4 @@ Git has a mutable index called stage.
+ Git tracks changes of files.
+ Git push origin master.
+ Creating a new branch is quick and simple.
++Git prohibit Fast forward add merge.
+wendingquandeMacBookPro:learngit wdq$ 

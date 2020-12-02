@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- context 是逆向工程的主要配置信息 -->
+    <!-- id：起个名字 -->
+    <!-- targetRuntime：设置生成的文件适用于那个 mybatis 版本 -->
+    <context id="default" targetRuntime="MyBatis3" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+        <!-- 为模型生成序列化方法-->
+        <!-- <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>-->
+        <!-- 为生成的Java模型创建一个toString方法 -->
+        <!-- <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
+        <!--optional,指在创建class时，对注释进行控制-->
+        <!--可以自定义生成model的代码注释-->
+        <commentGenerator type="com.icore.winvaz.util.generator.CommentGenerator">
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+        <!--配置数据库连接-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC&amp;useSSL=false&amp;characterEncoding=utf-8"
+                        userId="root"
+                        password="12345678">
+            <!--解决mysql驱动升级到8.0后不生成指定数据库代码的问题-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+        <!--非必须，类型处理器，在数据库类型和java类型之间的转换控制-->
+        <javaTypeResolver>
+            <!-- 默认情况下数据库中的 decimal，bigInt 在 Java 对应是 sql 下的 BigDecimal 类 -->
+            <!-- 不是 double 和 long 类型 -->
+            <!-- 使用常用的基本类型代替 sql 包下的引用类型 -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- targetPackage：生成的实体类所在的包 -->
+        <!-- targetProject：生成的实体类所在的硬盘位置 -->
+        <!--指定生成model的路径-->
+        <javaModelGenerator targetPackage="com.icore.winvaz.entity.model"
+                            targetProject="src/main/java">
+            <!-- 是否允许子包-->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 是否对model添加构造函数-->
+            <property name="constructorBased" value="false"/>
+            <!-- 是否清理从数据库中查询出的字符串左右两边的空白字符 -->
+            <property name="trimStrings" value="true"/>
+            <!-- 建立modal对象是否不可改变 即生成的modal对象不会有setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+        <!-- targetPackage 和 targetProject：生成的 mapper 文件的包和位置 -->
+        <!--指定生成mapper.xml的路径-->
+        <sqlMapGenerator targetPackage="com.icore.winvaz.dao"
+                         targetProject="src/main/resources">
+            <!-- 针对数据库的一个配置，是否把 schema 作为字包名 -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!-- targetPackage 和 targetProject：生成的 interface 文件的包和位置 -->
+        <!--指定生成mapper接口的的路径-->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.icore.winvaz.dao"
+                             targetProject="src/main/java">
+            <!-- 针对 oracle 数据库的一个配置，是否把 schema 作为字包名 -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        <!-- tableName是数据库中的表名，domainObjectName是生成的JAVA模型名，后面的参数不用改，要生成更多的表就在下面继续加table标签 -->
+        <!--生成全部表tableName设为%-->
+        <table tableName="student" domainObjectName="Student"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"></table>
+    </context>
+</generatorConfiguration>

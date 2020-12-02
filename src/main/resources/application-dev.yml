@@ -1,0 +1,135 @@
+server:
+# HTTPS
+#  ssl:
+#    enabled: true
+#    key-store: classpath:winvaz.p12
+#    key-alias: tomcathttps
+#    key-store-password: 123456
+
+# MyBatis
+mybatis:
+  # 注意：一定要对应mapper映射xml文件的所在路径
+  mapper-locations: classpath:com/icore/winvaz/dao/*.xml
+  # 注意：对应实体类的路径
+  type-aliases-package: com.icore.winvaz.entity.model
+  # Mybatis SQL语句控制台打印
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 全局地开启或关闭配置文件中的所有映射器已经配置的任何缓存。true/false
+    cache-enabled: true
+    # 开启驼峰命名  譬如数据库create_time 自动映射pojo属性createTime
+    map-underscore-to-camel-case: true
+    # 延迟加载的全局开关。当开启时，所有关联对象都会延迟加载。 特定关联关系中可通过设置 fetchType 属性来覆盖该项的开关状态。
+    lazy-loading-enabled: true
+
+# MyBatis Plus
+#mybatis-plus:
+#  # xml扫描，多个目录用逗号或者分号分隔（告诉Mapper所对应的XML文件位置）
+#  mapper-locations: classpath:com/icore/winvaz/dao/*.xml
+#  # 实体类别名
+#  type-aliases-package: com.icore.winvaz.entity.model
+#  # 以下配置均有默认值,可以不设置
+#  global-config:
+#    db-config:
+#      # 主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+#      id-type: auto
+#      # 字段策略 IGNORED:"忽略判断"  NOT_NULL:"非 NULL 判断")  NOT_EMPTY:"非空判断"
+#      field-strategy: NOT_EMPTY
+#      # 数据库类型
+#      db-type: MYSQL
+#      # 驼峰下划线转换
+#      column-underline: true
+#      # 逻辑删除
+#      logic-delete-value: 1
+#      logic-not-delete-value: 0
+#  configuration:
+#    # 缓存
+#    cache-enabled: true
+#    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+#    map-underscore-to-camel-case: true
+#    # 返回map时true:当查询数据为空时字段返回为null,false:不加这个查询数据为空时，字段将被隐藏
+#    call-setters-on-nulls: true
+#    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# log4j日志
+logging:
+  # 日志级别
+  # 不加root报错，Failed to bind properties under 'logging.level' to java.util.Map<java.lang.String, org.springframework.boot.logging.LogLevel>
+#  level:
+#    root: info
+#  # 日志输出样式
+#  pattern:
+#    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} | [$thread] | [%-5level] | %logger{50} - %msg%n"
+  config: classpath:logback-spring.xml
+
+# Databases
+spring:
+  datasource:
+    # 8.0版本驱动路径有变
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    # Mysql
+    url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC&useSSL=false
+    username: root
+    password: 12345678
+    druid:
+      # 连接池初始化数量
+      initial-size: 5
+      # 最小空闲连接数
+      min-idle: 10
+      # 最大连接数
+      max-active: 20
+      # 获取连接等待超时时间
+      maxWait: 60000
+      #间隔多久进行一次检测，检测需要关闭的空闲连接
+      time-between-eviction-runs-millis: 60000
+      # 不统计这些请求数据
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+      # 访问监控网页的登录用户名和密码
+      stat-view-servlet:
+        login-username: druid
+        login-password: druid
+
+  # jackson
+  jackson:
+    # 时间格式
+    date-format: java.text.SimpleDateFormat
+    # 时区
+    time-zone: GMT+8
+    # 参数转下划线
+    property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
+
+  # caffeine
+  cache:
+    type: caffeine
+    caffeine:
+      spec: initialCapacity=10,maximumSize=200,expireAfterWrite=300s
+
+  # Redis
+  redis:
+    # Redis服务器地址
+    host: localhost
+    # Redis数据库连接端口
+    port: 6379
+    # Redis数据库所以(默认为0)
+    database: 0
+    # Redis连接超时时间
+    timeout: 6000
+    # 连接池配置
+    lettuce:
+      pool:
+        max-idle: 10
+        min-idle: 5
+        max-wait: 20000
+        max-active: 8
+      shutdown-timeout: 100ms
+
+
+
+
+
+
+

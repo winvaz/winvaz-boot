@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icore.winvaz.dao.shiro.SysMenuMapper">
+    <resultMap id="BaseResultMap" type="com.icore.winvaz.entity.model.shiro.SysMenu">
+        <!--@Table sys_menu-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="perms" jdbcType="VARCHAR" property="perms"/>
+    </resultMap>
+    <sql id="table">
+    sys_menu
+</sql>
+    <sql id="fields">
+        id, `name`, perms
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select <include refid="fields"/>
+    from sys_menu
+    where id = #{id,jdbcType=BIGINT}
+
+    </select>
+    <!-- 通过角色id查询系统菜单-->
+    <select id="selectSysMenuByRoleId" parameterType="java.lang.Long"
+    resultType="com.icore.winvaz.entity.model.shiro.SysMenu">
+    SELECT <include refid="fields"></include> FROM sys_menu sm
+    LEFT JOIN sys_role_menu se ON sm.menu_id = se.menu_id
+    WHERE se.role_id = #{roleId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_menu
+    where id = #{id,jdbcType=BIGINT}
+
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.icore.winvaz.entity.model.shiro.SysMenu"
+            useGeneratedKeys="true">
+    insert into sys_menu (`name`, perms)
+    values (#{name,jdbcType=VARCHAR}, #{perms,jdbcType=VARCHAR})
+
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.icore.winvaz.entity.model.shiro.SysMenu" useGeneratedKeys="true">
+    insert into sys_menu
+
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                `name`,
+
+            </if>
+            <if test="perms != null">
+
+        perms,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+
+            </if>
+            <if test="perms != null">
+
+        #{perms,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.icore.winvaz.entity.model.shiro.SysMenu">
+        <!--@mbg.generated-->
+    update sys_menu
+
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+
+            </if>
+            <if test="perms != null">
+
+        perms = #{perms,jdbcType=VARCHAR},
+            </if>
+        </set>
+
+    where id = #{id,jdbcType=BIGINT}
+
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.icore.winvaz.entity.model.shiro.SysMenu">
+        <!--@mbg.generated-->
+    update sys_menu
+    set `name` = #{name,jdbcType=VARCHAR},
+      perms = #{perms,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+
+    </update>
+</mapper>
