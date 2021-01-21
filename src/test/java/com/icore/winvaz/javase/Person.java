@@ -14,6 +14,8 @@ public class Person implements Comparable, Serializable {
     // 实现Serializable接口的类一定要显示地定义serialVersionUID属性值。
     private static final long serialVersionUID = 1L;
 
+    private Integer id;
+
     /**
      * 把成员变量加上了static后，序列化没有问题，但是反序列化的时候，成员变量的值丢失，
      * 原因序列化的时候，文件没有保存静态变量的值。序列化是对象的序列化，
@@ -22,8 +24,8 @@ public class Person implements Comparable, Serializable {
     //在设计一个类时，如果该属性为该类的属性，则应该定义在成员变量位置，
     // 如果不属于该类(事物)本身则定义在局部位置
     // 为了子类能够访问到父类的成员变量，需要将private私有修饰符改为protected受保护的修饰符
-    // private String name;
-    protected String name;
+    private String name;
+    // protected String name;
     // Integer age = 10; // 显示初始化
     private Integer age; // 显示初始化
     // 敏感属性不想被序列化，使用transient关键字

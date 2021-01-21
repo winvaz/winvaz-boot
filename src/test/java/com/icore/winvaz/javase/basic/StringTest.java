@@ -1,5 +1,6 @@
 package com.icore.winvaz.javase.basic;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
@@ -375,5 +376,12 @@ public class StringTest {
                 continue w;
             }
         }
+    }
+
+    @Test
+    public void stringUtilsTest() {
+        System.out.println(StringUtils.isBlank(""));
+        System.out.println(StringUtils.isBlank(" "));
+        System.out.println(StringUtils.isBlank(null));
     }
 }

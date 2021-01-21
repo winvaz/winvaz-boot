@@ -3,6 +3,8 @@ package com.icore.winvaz.javase.basic.io;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 8.	字节输入流
@@ -16,13 +18,15 @@ import java.io.FileInputStream;
 public class InputStreamTest {
 
     @Test
-    public void test() {
-        FileInputStream fileInputStream = null;
+    public void test() throws IOException {
+        InputStream fileInputStream = null;
         try {
             fileInputStream = new FileInputStream("/Users/wdq/Desktop/writer.txt");
             // 读取单个字节的方法，父类的方法read()方法，返回单个字节，int
             //int read = fileInputStream.read();
             //System.out.println(read);
+            // 字节数
+            System.out.println(fileInputStream.available());
             // 循环读取
             byte[] bytes = new byte[1024];
             int len = 0;
@@ -31,6 +35,8 @@ public class InputStreamTest {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            fileInputStream.close();
         }
     }
 }
