@@ -365,6 +365,8 @@ public class MapTest {
      */
     @Test
     public void properties() {
+
+        Map hashTable = new Hashtable();
         // 系统配置
         // System.out.println(System.getProperties());
 

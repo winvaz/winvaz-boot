@@ -31,7 +31,7 @@ public class RandomAccessFileTest {
      */
     @Test
     public void readInt() throws IOException {
-        RandomAccessFile raf = new RandomAccessFile("/Users/wdq/Documents/ran.txt", "rw");
+        RandomAccessFile raf = new RandomAccessFile("ran.txt", "rw");
         int x = raf.readInt();
         System.out.println(x);
     }
@@ -42,7 +42,7 @@ public class RandomAccessFileTest {
     @Test
     public void writeInt() throws IOException {
         //创建随机读写类对象，rw的形式打开
-        RandomAccessFile raf = new RandomAccessFile("/Users/wdq/Documents/ran.txt", "rw");
+        RandomAccessFile raf = new RandomAccessFile("ran.txt", "rw");
         raf.writeInt(65);
         raf.close();
     }
@@ -52,7 +52,7 @@ public class RandomAccessFileTest {
      */
     @Test
     public void readAll() throws IOException {
-        RandomAccessFile raf = new RandomAccessFile("/Users/wdq/Documents/ran.txt", "rw");
+        RandomAccessFile raf = new RandomAccessFile("ran.txt", "rw");
         byte[] bytes = new byte[4];
         int age = 0;
         while (true) {
@@ -71,7 +71,7 @@ public class RandomAccessFileTest {
      */
     @Test
     public void read() throws IOException {
-        RandomAccessFile raf = new RandomAccessFile("/Users/wdq/Documents/ran.txt", "rw");
+        RandomAccessFile raf = new RandomAccessFile("ran.txt", "rw");
         //偏移指针
         raf.seek(8);
         byte[] bytes = new byte[4];
@@ -86,7 +86,7 @@ public class RandomAccessFileTest {
      */
     @Test
     public void write() throws IOException {
-        RandomAccessFile raf = new RandomAccessFile("/Users/wdq/Documents/ran.txt", "rw");
+        RandomAccessFile raf = new RandomAccessFile("ran.txt", "rw");
         raf.write("张三".getBytes());
         raf.writeInt(65);
 

@@ -1,14 +1,19 @@
 package com.icore.winvaz.javase.basic;
 
 import com.icore.winvaz.javase.Person;
+import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * 序列化
@@ -117,6 +122,20 @@ public class SerializableTest {
         }
     }
 
+    @Test
+    public void serializableCloneTest() throws CloneNotSupportedException {
+        C c = new C("张三", 10);
+        // Clone c
+        C clonec = (C) c.clone();
+
+        // mutate C
+        c.setAge(11);
+
+        //
+        System.out.println("原始数据:" + c);
+        System.out.println("克隆数据:" + clonec);
+    }
+
     /**
      * com.alibaba.fastjons序列化和反序列化
      */
@@ -132,4 +151,44 @@ public class SerializableTest {
         System.out.println("age为：" + person.getAge());
     }
     */
+}
+
+/**
+ * 序列化克隆
+ * @author wdq
+ * @create 2021/1/21 17:00
+ */
+class SerializableClone implements Cloneable, Serializable {
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        try {
+            // save the object to a byte array
+            ByteArrayOutputStream bout = new ByteArrayOutputStream();
+            try (ObjectOutputStream oos = new ObjectOutputStream(bout)) {
+                oos.writeObject(this);
+            }
+
+            // read a clone of the object from the byte array
+            try (InputStream in = new ByteArrayInputStream(bout.toByteArray())) {
+                ObjectInputStream ois = new ObjectInputStream(in);
+                return ois.readObject();
+            }
+        } catch (Exception e) {
+            CloneNotSupportedException cnse = new CloneNotSupportedException();
+            cnse.initCause(e);
+            throw cnse;
+        }
+    }
+}
+
+@Data
+class C extends SerializableClone {
+    private String name;
+    private Integer age;
+
+    public C(String name, Integer age) {
+        this.name = name;
+        this.age = age;
+    }
 }

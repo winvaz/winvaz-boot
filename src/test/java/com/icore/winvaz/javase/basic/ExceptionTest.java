@@ -1,5 +1,7 @@
 package com.icore.winvaz.javase.basic;
 
+import org.junit.jupiter.api.Test;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -147,6 +149,71 @@ public class ExceptionTest {
             cause.printStackTrace();
         }
     }
+
+    /**
+     * try、finally中都有return时，代码如何执行？？？
+     * try{
+     *  return 代码1;
+     * }finally{
+     *  return 代码2;
+     * }
+     * 不论try中代码如何执行，是否有异常，最终都是按照下面过程执行，finally不管任何情况，最终都会执行。
+     * 执行代码1
+     * 执行代码2
+     * return 代码2的结果
+     */
+    @Test
+    public void tryFinallyTest() {
+        // System.out.println("result:" + m0()); // m0 m1 m2 result:m2
+        // System.out.println("result:" + m0()); // m0 m2 m3 result:m3
+    }
+
+    public String m0() {
+        try {
+            System.out.println("m0");
+            System.out.println(10 / 0);
+            return m1();
+        } catch (Exception e) {
+            return m2();
+        } finally {
+            return m3();
+        }
+    }
+
+    private String m3() {
+        System.out.println("m3");
+        return "m3";
+    }
+
+    private String m2() {
+        System.out.println("m2");
+        return "m2";
+    }
+
+    private String m1() {
+        System.out.println("m1");
+        return "m1";
+    }
+
+
+    /*
+    public static String m0() {
+        try {
+            System.out.println("m0");
+            return m1();
+        } finally {
+            return m2();
+        }
+    }
+    public static String m1() {
+        System.out.println("m1");
+        return "m1";
+    }
+    public static String m2() {
+        System.out.println("m2");
+        return "m2";
+    }
+    */
 
     /**
      * 递归函数

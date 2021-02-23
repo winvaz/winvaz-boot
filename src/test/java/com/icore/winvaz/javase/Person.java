@@ -10,6 +10,7 @@ import java.util.Objects;
  */
 // 实现Serializable接口，实现该类对象的序列化
 // 实现Comparable接口，让Person具备自然顺序,自然顺序，我们自己定义，比较姓名，姓名相同，比较年龄
+    // 序列化克隆，继承SerialConle
 public class Person implements Comparable, Serializable {
     // 实现Serializable接口的类一定要显示地定义serialVersionUID属性值。
     private static final long serialVersionUID = 1L;
