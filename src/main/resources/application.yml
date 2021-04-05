@@ -1,6 +1,11 @@
 # 端口
 server:
   port: 8090
+  ssl:
+    key-store: classpath:winvaz.p12
+    key-alias: tomcathttps
+    key-store-password: 123456
+
 # 服务名称
 spring:
   application:

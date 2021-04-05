@@ -214,7 +214,8 @@ public class JdbcTest {
             } finally {
                 try {
                     if (statement != null) {
-                        statement.close();
+                        statement.closeOnCompletion();
+                        // statement.close();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

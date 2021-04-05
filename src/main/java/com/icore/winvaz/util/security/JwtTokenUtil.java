@@ -8,7 +8,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -21,7 +23,8 @@ import java.util.Map;
  * @Create 2020/8/10 13:53
  * @Version 1.0.0
  */
-public class JwtTokenUtil {
+@Component
+public class JwtTokenUtil implements Serializable {
 
     /**
      * JwtToken生成的工具类

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
 /**
@@ -17,7 +18,11 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 public class ConditionDemo {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-        ctx.getEnvironment().getSystemProperties().put("people", "南方人");
+        // @Conditional
+        // ctx.getEnvironment().getSystemProperties().put("people", "南方人");
+
+        // @profile
+        ctx.getEnvironment().setActiveProfiles("南方人");
         ctx.register(FoodConfig.class);
         ctx.refresh();
 
@@ -92,13 +97,15 @@ class NoodlesCondition implements Condition {
 class FoodConfig {
 
     @Bean("food")
-    @Conditional(RiceCondition.class)
+    // @Conditional(RiceCondition.class)
+    @Profile("南方人")
     Food rice() {
         return new Rice();
     }
 
     @Bean("food")
-    @Conditional(NoodlesCondition.class)
+    // @Conditional(NoodlesCondition.class)
+    @Profile("北方人")
     Food noodles() {
         return new Noodles();
     }

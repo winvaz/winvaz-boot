@@ -73,7 +73,7 @@ spring:
     # Mysql
     url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC&useSSL=false
     username: root
-    password: 12345678
+    password: root1234
     druid:
       # 连接池初始化数量
       initial-size: 5
@@ -92,6 +92,12 @@ spring:
       stat-view-servlet:
         login-username: druid
         login-password: druid
+
+    # 安全
+  security:
+    user:
+      name: winvaz
+      password: 123456
 
   # jackson
   jackson:

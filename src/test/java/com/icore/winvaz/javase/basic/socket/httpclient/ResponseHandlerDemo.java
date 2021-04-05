@@ -1,4 +1,4 @@
-package com.icore.winvaz.javase.apache.httpclient;
+package com.icore.winvaz.javase.basic.socket.httpclient;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

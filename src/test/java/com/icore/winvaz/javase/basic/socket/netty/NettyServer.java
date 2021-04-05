@@ -1,4 +1,4 @@
-package com.icore.winvaz.javase.basic.socket;
+package com.icore.winvaz.javase.basic.socket.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

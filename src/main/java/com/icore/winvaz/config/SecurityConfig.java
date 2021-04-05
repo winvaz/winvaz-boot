@@ -91,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public JWTAuthenticationTokenFilter jwtAuthenticationTokenFilter() throws Exception {
         return new JWTAuthenticationTokenFilter(authenticationManager());
     }
-
+    
     @Bean
     @Override
     public AuthenticationManager authenticationManager() throws Exception {
@@ -130,8 +130,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public DynamicSecurityMetadataSource dynamicSecurityMetadataSource() {
         return new DynamicSecurityMetadataSource();
     }
-
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
