@@ -1,10 +1,75 @@
+# 端口
 server:
-# HTTPS
-#  ssl:
-#    enabled: true
-#    key-store: classpath:winvaz.p12
-#    key-alias: tomcathttps
-#    key-store-password: 123456
+  port: 8090
+  #   HTTPS
+  ssl:
+    key-store: classpath*:winvaz.p12
+    key-alias: tomcathttps
+    key-store-password: 123456
+
+# 服务名称
+spring:
+  # security用户名密码配置
+  security:
+    user:
+      name: winvaz
+      password: 123456
+  application:
+    name: winvaz-boot
+  # 文件上传
+  servlet:
+    multipart:
+      enabled: true # 开启文件上传
+      max-file-size: 10MB # 限制文件上传大小为10M
+  # 数据库Databases
+  datasource:
+    # 8.0版本驱动路径有变
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    # Mysql
+    url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC&useSSL=false
+    username: root
+    password: root1234
+    druid:
+      # 连接池初始化数量
+      initial-size: 5
+      # 最小空闲连接数
+      min-idle: 10
+      # 最大连接数
+      max-active: 20
+      # 获取连接等待超时时间
+      maxWait: 60000
+      #间隔多久进行一次检测，检测需要关闭的空闲连接
+      time-between-eviction-runs-millis: 60000
+      # 不统计这些请求数据
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+      # 访问监控网页的登录用户名和密码
+      stat-view-servlet:
+        login-username: druid
+        login-password: druid
+  # Redis
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    password:
+    timeout: 1000
+    # Redis连接池配置
+    jedis:
+      pool:
+      max-active: 200
+      max-wait: -1
+      max-idle: 10
+      min-idle: 0
+
+# JWT
+jwt:
+  tokenHeader: Authorization # JWT存储的请求头
+  secret: winvaz-boot-secret # JWT加解密使用的密钥
+  expiration: 604800 # JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer ' # JWT负载中拿到开头
 
 # MyBatis
 mybatis:
@@ -56,48 +121,12 @@ mybatis:
 logging:
   # 日志级别
   # 不加root报错，Failed to bind properties under 'logging.level' to java.util.Map<java.lang.String, org.springframework.boot.logging.LogLevel>
-#  level:
-#    root: info
-#  # 日志输出样式
-#  pattern:
-#    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} | [$thread] | [%-5level] | %logger{50} - %msg%n"
+  #  level:
+  #    root: info
+  #  # 日志输出样式
+  #  pattern:
+  #    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} | [$thread] | [%-5level] | %logger{50} - %msg%n"
   config: classpath:logback-spring.xml
-
-# Databases
-spring:
-  datasource:
-    # 8.0版本驱动路径有变
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # 数据源
-    type: com.alibaba.druid.pool.DruidDataSource
-    # Mysql
-    url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC&useSSL=false
-    username: root
-    password: root1234
-    druid:
-      # 连接池初始化数量
-      initial-size: 5
-      # 最小空闲连接数
-      min-idle: 10
-      # 最大连接数
-      max-active: 20
-      # 获取连接等待超时时间
-      maxWait: 60000
-      #间隔多久进行一次检测，检测需要关闭的空闲连接
-      time-between-eviction-runs-millis: 60000
-      # 不统计这些请求数据
-      web-stat-filter:
-        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
-      # 访问监控网页的登录用户名和密码
-      stat-view-servlet:
-        login-username: druid
-        login-password: druid
-
-    # 安全
-  security:
-    user:
-      name: winvaz
-      password: 123456
 
   # jackson
   jackson:
@@ -114,28 +143,22 @@ spring:
     caffeine:
       spec: initialCapacity=10,maximumSize=200,expireAfterWrite=300s
 
-  # Redis
-  redis:
-    # Redis服务器地址
-    host: localhost
-    # Redis数据库连接端口
-    port: 6379
-    # Redis数据库所以(默认为0)
-    database: 0
-    # Redis连接超时时间
-    timeout: 6000
-    # 连接池配置
-    lettuce:
-      pool:
-        max-idle: 10
-        min-idle: 5
-        max-wait: 20000
-        max-active: 8
-      shutdown-timeout: 100ms
-
-
-
-
-
-
-
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /actuator/**
+      - /druid/**
+      - /admin/login
+      - /admin/register
+      - /admin/info
+      - /admin/logout
+      - /minio/upload

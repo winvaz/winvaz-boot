@@ -1,0 +1,2 @@
+# Spring Boot中，一共有4种地方可以存放application.yml文件。
+# 3.resources目录下。优先级按数字顺序依次降低。

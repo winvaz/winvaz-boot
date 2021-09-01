@@ -227,11 +227,13 @@ class SingletonStaticInner {
 
     // 静态内部类
     private static class SingletonHolder {
+        // 静态字段
         private static final SingletonStaticInner INSTANCE = new SingletonStaticInner();
     }
 
     // 静态访问方法
     public static final SingletonStaticInner getInstance() {
+        // 访问静态内部类的静态字段
         return SingletonHolder.INSTANCE;
     }
 

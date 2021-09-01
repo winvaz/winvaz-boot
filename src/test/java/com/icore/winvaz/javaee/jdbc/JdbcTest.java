@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
@@ -128,11 +129,25 @@ public class JdbcTest {
 
             // 5.调用executeUpdate()方法执行，它没有参数
             resultSet = preparedStatement.executeQuery();
+            //
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                if (i > 1) System.out.print(", ");
+                System.out.print(metaData.getColumnLabel(i));
+            }
+            System.out.println();
             // 6.遍历输出
             while (resultSet.next()) {
-                int empno = resultSet.getInt(1);//获取当前行第1列的数据
+                /*int empno = resultSet.getInt(1);//获取当前行第1列的数据 卸船
                 String ename = resultSet.getString("ename");//获取当前行名为ename的列数据
-                System.out.println(empno + ", " + ename);
+                System.out.println(empno + ", " + ename);*/
+
+                for (int i = 1; i <= columnCount; i++) {
+                    if (i > 1) System.out.print(", ");
+                    System.out.print(resultSet.getString(i));
+                }
+                System.out.println();
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -209,7 +209,7 @@ public class InnerClassTest {
         InnerClassTest.method().show();
         System.out.println("==============");
 
-        // 把name属性私有化
+        // 把name属性私有化 舱单
         outerClassTest.setName("张三");
         System.out.println(outerClassTest.getName());
         // name属性私有化，无法访问(在同一个类中可以访问)

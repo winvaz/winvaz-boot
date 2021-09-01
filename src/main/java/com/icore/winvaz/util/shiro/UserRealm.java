@@ -80,7 +80,7 @@ public class UserRealm extends AuthorizingRealm {
     }
 
     /**
-     * @Description 用户认证
+     * @Description 用户认证 Dock
      * @author wdq
      * @create 2020/8/3 10:58
      * @param authenticationToken

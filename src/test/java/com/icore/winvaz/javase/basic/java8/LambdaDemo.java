@@ -5,11 +5,11 @@ import lombok.Data;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Description: ${DESCRIPTION}
@@ -96,6 +96,16 @@ public class LambdaDemo {
 
         greetingService1.sayMessage("World !");
         greetingService2.sayMessage("Good !");
+
+        List<Name> re = new ArrayList<>();
+        List<Name> listA = Arrays.asList(new Name(1, "zhangsan"), new Name(2, "lisi"));
+        List<Name> listB = Arrays.asList(new Name(1, "18"), new Name(2, "19"));
+        for (int i = 0; i < listA.size(); i++) {
+            re.add(listA.get(i));
+            re.add(listB.get(i));
+        }
+        System.out.println(re);
+        re.forEach(System.out::println);
     }
 
     public static void countDown(int start, int delay) {
@@ -134,4 +144,26 @@ public class LambdaDemo {
 class Pserson {
     private String name;
     private Integer age;
+}
+
+@Data
+class Name {
+    private int x;
+    private String name;
+
+    public Name(int x, String name) {
+        this.x = x;
+        this.name = name;
+    }
+}
+
+@Data
+class Age {
+    private int x;
+    private String age;
+
+    public Age(int x, String age) {
+        this.x = x;
+        this.age = age;
+    }
 }

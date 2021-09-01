@@ -1,7 +1,5 @@
 package com.icore.winvaz.config;
 
-import com.icore.winvaz.service.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;

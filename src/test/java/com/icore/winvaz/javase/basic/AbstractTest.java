@@ -41,6 +41,7 @@ public class AbstractTest {
         Animal dog = new Dog();
         // 这种引用抽象类的好处在于，我们对其进行方法调用，并不关心Animal类型变量的具体子类型
         cat.sleep();
+        cat.eat();
         dog.sleep();
     }
 }
@@ -136,6 +137,11 @@ class Cat extends Animal {
     @Override
     public void run() {
         System.out.println("猫，跑了!");
+    }
+
+    @Override
+    public void eat() {
+        System.out.println("猫，吃了!");
     }
 }
 

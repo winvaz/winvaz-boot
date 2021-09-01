@@ -76,7 +76,7 @@ class StopState implements State {
 }
 
 /**
- * 步骤3
+ * 步骤3 进入
  * 创建Context类
  */
 class Context {

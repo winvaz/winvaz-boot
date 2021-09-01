@@ -5,11 +5,15 @@ import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.core.script.RedisScript;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +34,34 @@ public class RedisUtil {
 
     @Autowired
     private static RedisTemplate<String, Object> redisTemplate;
+
+    private static final String LOCK_LUA;
+
+    private static final String UNLOCK_LUA;
+
+    static {
+        StringBuilder lsb = new StringBuilder();
+        lsb.append("if redis.call('setNx', KEYS[1], ARGV[1]) then");
+        lsb.append("if redis.call('get', KEYS[1]) == ARGV[1] then");
+        lsb.append("redis.call('expire', KEYS[1], ARGV[2]) ");
+        lsb.append("    return 'OK'  ");
+        lsb.append("else  ");
+        lsb.append("    return nil end ");
+        lsb.append("end  ");
+        LOCK_LUA = lsb.toString();
+
+        // 清空
+        lsb.delete(0, lsb.length());
+
+        lsb.append("local cliVal = redis.call('get', KEYS[1]) ");
+        lsb.append("if(cliVal == ARGV[1]) then");
+        lsb.append("redis.call('del', KEYS[1]) ");
+        lsb.append("    return 'OK' ");
+        lsb.append("else    ");
+        lsb.append("    return nil ");
+        lsb.append("end ");
+        UNLOCK_LUA = lsb.toString();
+    }
 
     /**
      * ========================= Shiro ========================
@@ -709,6 +741,43 @@ public class RedisUtil {
         }
         return false;
     }
+
+    /**
+     * Redis Lua脚本上锁
+     * @author wdq
+     * @create 2021/5/31 15:02
+     * @param key
+     * @param value
+     * @param expireTime 秒
+     * @Return boolean
+     * @exception
+     */
+    public boolean lockLua(String key, String value, long expireTime) {
+        RedisScript<String> redisScript = new DefaultRedisScript<>(LOCK_LUA, String.class);
+        Object result = redisTemplate.execute(redisScript, new StringRedisSerializer(), new StringRedisSerializer(),
+                Arrays.asList(key), value, String.valueOf(expireTime));
+        return "OK".equals(result);
+    }
+
+    /**
+     * Redis Lua脚本解锁
+     * @author wdq
+     * @create 2021/5/31 15:02
+     * @param key
+     * @param value
+     * @Return boolean
+     * @exception
+     */
+    public boolean unLockLua(String key, String value) {
+        if (value.equals(String.valueOf(redisTemplate.opsForValue().get(key)))) {
+            RedisScript<String> redisScript = new DefaultRedisScript<>(UNLOCK_LUA, String.class);
+            Object result = redisTemplate.execute(redisScript, Arrays.asList(key), value);
+            return "OK".equals(result);
+        }
+        return false;
+    }
+
+
 
     /**
      * 自增序列号

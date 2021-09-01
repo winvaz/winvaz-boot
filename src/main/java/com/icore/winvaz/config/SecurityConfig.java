@@ -25,6 +25,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
@@ -77,14 +80,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // auth.authenticationProvider(userAuthenticationProvider);
 
         // 下面这两行配置表示在内存中配置了两个用户
-        /*
-        authenticationManagerBuilder.inMemoryAuthentication()
+        auth.inMemoryAuthentication()
                 .withUser("winvaz").roles("admin").password(bCryptPasswordEncoder().encode("123"));
-        authenticationManagerBuilder.inMemoryAuthentication()
+        auth.inMemoryAuthentication()
                 .withUser("zhangsan").roles("user").password(bCryptPasswordEncoder().encode("123"));
-        */
 
-        auth.userDetailsService(userDetailsService()).passwordEncoder(bCryptPasswordEncoder());
+        // 自定义UserDetailsService
+        // auth.userDetailsService(userDetailsService()).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Bean
@@ -169,7 +171,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         }
     }
 
-
+    @Bean
     CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
         CustomAuthenticationFilter filter = new CustomAuthenticationFilter();
         filter.setAuthenticationSuccessHandler((request, response, authentication) -> {
@@ -196,8 +198,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 内部类
      */
-    class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-
+    private class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         @Override
         public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
             if (request.getContentType().equals(MediaType.APPLICATION_JSON_UTF8_VALUE)
